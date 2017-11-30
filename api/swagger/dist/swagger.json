@@ -1,0 +1,406 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample server for mailBox api",
+    "version": "1.0.0",
+    "title": "Simple Mail Box API"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/doc",
+  "tags": [
+    {
+      "name": "/api/session",
+      "description": "Create user, login, etc"
+    },
+    {
+      "name": "/api/mailBox (only for authorized users)",
+      "description": "Your messages are here"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "/api/session"
+        ],
+        "summary": "Create new user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "example": {
+                "email": "myemail@gmail.com",
+                "password": "123123asdasd",
+                "confirmPassword": "123123asdasd"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok"
+          },
+          "400": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "/api/session"
+        ],
+        "summary": "Login into our service",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "example": {
+                "email": "myemail@gmail.com",
+                "password": "123123asdasd"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "403": {
+            "description": "Email address not confirmed"
+          },
+          "422": {
+            "description": "Incorrect email or password"
+          }
+        }
+      }
+    },
+    "/confirm-email/:id": {
+      "get": {
+        "tags": [
+          "/api/session"
+        ],
+        "summary": "Confirm your email",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok"
+          },
+          "404": {
+            "description": "No user with current email"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "patch": {
+        "tags": [
+          "/api/session"
+        ],
+        "summary": "Logout from our service",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "myemail@gmail.com"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok"
+          }
+        }
+      }
+    },
+    "/refresh-tokens": {
+      "patch": {
+        "tags": [
+          "/api/session"
+        ],
+        "summary": "Refresh access and refresh tokens",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "myemail@gmail.com"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok"
+          },
+          "401": {
+            "description": "Token is expired"
+          },
+          "409": {
+            "description": "Bad token"
+          }
+        }
+      }
+    },
+    "/messages": {
+      "get": {
+        "tags": [
+          "/api/mailBox (only for authorized users)"
+        ],
+        "summary": "Return all user`s messages",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "myemail@gmail.com"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok, return all user`s messages"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/messages/archive": {
+      "get": {
+        "tags": [
+          "/api/mailBox (only for authorized users)"
+        ],
+        "summary": "Return all user`s archived messages",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "myemail@gmail.com"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok, return all user`s archived messages"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/messages/:id": {
+      "get": {
+        "tags": [
+          "/api/mailBox (only for authorized users)"
+        ],
+        "summary": "Return message with current id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "myemail@gmail.com"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok, return message"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/messages/archive/:id": {
+      "patch": {
+        "tags": [
+          "/api/mailBox (only for authorized users)"
+        ],
+        "summary": "Archive message with current id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "myemail@gmail.com"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok, archive message"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/messages/json-to-db": {
+      "patch": {
+        "tags": [
+          "/api/mailBox (only for authorized users)"
+        ],
+        "summary": "Import messagec to current user from json",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "myemail@gmail.com"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "file (.json format only)",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is ok, archive message"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "passwordHash": {
+          "type": "string"
+        },
+        "confirmed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Session": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "refreshTokenHash": {
+          "type": "string"
+        }
+      }
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "read": {
+          "type": "boolean"
+        },
+        "archived": {
+          "type": "boolean"
+        },
+        "sender": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "timeSent": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

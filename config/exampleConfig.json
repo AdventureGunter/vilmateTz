@@ -1,0 +1,21 @@
+{
+  "db": {
+    "url" : "Your db url"
+  },
+  "jwt": {
+    "jwtSecret": "Your jwt secret"
+  },
+  "serverFolder": "project folder on remote server",
+  "ipv4": "Your remote server IP",
+  "port": "Port where u want start project",
+  "pm2name": "pm2 task name",
+  "crypto": {
+    "algorithm": "",
+    "password": "",
+    "frontSecret": ""
+  },
+  "remote": {
+    "username": "remote server aut username",
+    "passphrase": "passphrase to ssh key"
+  }
+}

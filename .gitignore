@@ -1,0 +1,6 @@
+.idea
+/config/localDev.json
+/config/remote.json
+package-lock.json
+.ssh
+node_modules
